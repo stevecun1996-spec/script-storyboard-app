@@ -27,7 +27,18 @@ st.set_page_config(
 
 # 可选：添加简单的密码验证（如需小范围分享，取消下面的注释）
 # import os
-# PASSWORD = os.environ.get("APP_PASSWORD", "")  # 在 Streamlit Cloud Secrets 中设置
+# 
+# # 获取密码：优先从 Streamlit Cloud Secrets 获取，其次从环境变量获取
+# def get_secret(key: str, default: str = ""):
+#     """获取配置值，优先从 st.secrets 获取，其次从环境变量"""
+#     try:
+#         # 尝试从 Streamlit Cloud Secrets 获取
+#         return st.secrets.get(key, default)
+#     except (AttributeError, KeyError, FileNotFoundError):
+#         # 如果不在 Streamlit Cloud 或 secrets 不存在，使用环境变量
+#         return os.environ.get(key, default)
+# 
+# PASSWORD = get_secret("APP_PASSWORD", "")  # 在 Streamlit Cloud Secrets 中设置
 # 
 # if PASSWORD:  # 只有在设置了密码时才启用验证
 #     if "authenticated" not in st.session_state:
